@@ -4,7 +4,7 @@
 ## 6. Implementation of string manipulation.
 # Ex.No:11
   Formulate a C program to convert a given decimal number into its binary equivalent and display it.
-# Date : 
+# Date : 26-02-2026
 # Aim:
 To formulate a C program to convert a decimal number into its binary equivalent and display it.
 # Algorithm:
@@ -28,7 +28,34 @@ To formulate a C program to convert a decimal number into its binary equivalent 
 ### Step 8: 
    Stop
 # Program:
+```
+#include <stdio.h>
+
+int main() {
+    int num, rem, binary[50], i = 0, k;
+
+    printf("Enter a decimal number: ");
+    scanf("%d", &num);
+
+    int temp = num;
+
+    while (temp > 0) {
+        binary[i] = temp % 2;
+        temp = temp / 2;
+        i++;
+    }
+
+    printf("Binary: ");
+    for (k = i - 1; k >= 0; k--) {
+        printf("%d", binary[k]);
+    }
+
+    return 0;
+}
+```
 # Output:
+<img width="887" height="653" alt="image" src="https://github.com/user-attachments/assets/fcded9fd-1083-4864-bbea-df67b2afc154" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -37,7 +64,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-3- Module 3 - FoC
 # Ex.No:12
   Develop a C program to read a matrix and find its saddle point. A saddle point is an element that is the minimum in its row and also the maximum in its column. If such an element exists, display its position and value.
-# Date : 
+# Date : 26-02-2026
 # Aim:
   To develop a C program that inputs a matrix, checks each row for its minimum element, verifies whether that element is also the maximum in its corresponding column, and displays the saddle point and its position if it exists.
 # Algorithm:
@@ -67,7 +94,67 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 9: 
   Stop
 # Program:
+```
+#include <stdio.h>
+
+int main() {
+    int m, i, j, k, min, max, posMinRow, posMinCol, posMaxRow;
+
+    printf("Enter order of square matrix: ");
+    scanf("%d", &m);
+
+    int a[m][m];
+    
+    printf("Enter matrix elements:\n");
+    for (i = 0; i < m; i++)
+        for (j = 0; j < m; j++)
+            scanf("%d", &a[i][j]);
+
+    printf("Matrix:\n");
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < m; j++)
+            printf("%d ", a[i][j]);
+        printf("\n");
+    }
+
+    int found = 0;
+
+    for (i = 0; i < m; i++) {
+        min = a[i][0];
+        posMinCol = 0;
+
+        for (j = 1; j < m; j++) {
+            if (a[i][j] < min) {
+                min = a[i][j];
+                posMinCol = j;
+            }
+        }
+
+        max = a[0][posMinCol];
+        posMaxRow = 0;
+
+        for (k = 1; k < m; k++) {
+            if (a[k][posMinCol] > max) {
+                max = a[k][posMinCol];
+                posMaxRow = k;
+            }
+        }
+
+        if (min == max && posMaxRow == i) {
+            printf("Saddle Point: %d at position (%d, %d)\n", min, i, posMinCol);
+            found = 1;
+        }
+    }
+
+    if (!found)
+        printf("No Saddle Point found.\n");
+
+    return 0;
+}
+```
 # Output:
+<img width="895" height="417" alt="image" src="https://github.com/user-attachments/assets/661ba975-ed80-4c87-a647-ce46ef0262a2" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -76,7 +163,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-3- Module 3 - FoC
 # Ex.No:13
   Formulate a C program to reverse a string entered by the user and display the reversed string.
-# Date : 
+# Date : 26-02-2026
 # Aim:
   To formulate a C program that reads a string from the user, reverses it, and prints the reversed string.
 # Algorithm:
@@ -101,7 +188,34 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 10: 
   Stop
 # Program:
+```
+#include <stdio.h>
+
+int main() {
+    char s[100], d[100];
+    int i, len = 0, j = 0;
+
+    printf("Enter a string: ");
+    scanf("%[^\n]s", s);
+
+    while (s[len] != '\0')
+        len++;
+
+    for (i = len - 1; i >= 0; i--) {
+        d[j] = s[i];
+        j++;
+    }
+
+    d[j] = '\0';
+
+    printf("Reversed String: %s", d);
+
+    return 0;
+}
+```
 # Output:
+<img width="891" height="617" alt="image" src="https://github.com/user-attachments/assets/5e67d3a2-8de7-4334-a4e5-3e20a1f45f8d" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -109,7 +223,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-3- Module 3 - FoC
 # Ex.No:14
   Formulate a C program to count the frequency of each character in a given string and display the count of every character.
-# Date : 
+# Date : 26-02-2026
 # Aim:
   To formulate a C program that accepts a string from the user and calculates the frequency of each character in the string.
 # Algorithm:
@@ -135,7 +249,40 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 8:
   Stop
 # Program:
+```
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char s[100];
+    int visited[256] = {0};
+    int i, j, n, count;
+
+    printf("Enter a string: ");
+    scanf("%[^\n]", s);
+
+    n = strlen(s);
+
+    for (i = 0; i < n; i++) {
+        if (visited[(unsigned char)s[i]] == 0) {
+            count = 0;
+
+            for (j = 0; j < n; j++)
+                if (s[i] == s[j])
+                    count++;
+
+            printf("%c = %d\n", s[i], count);
+
+            visited[(unsigned char)s[i]] = 1;
+        }
+    }
+
+    return 0;
+}
+```
 # Output:
+<img width="894" height="773" alt="image" src="https://github.com/user-attachments/assets/6cd5e6a1-9f5b-4677-a12b-461bb2a6c88a" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
 
@@ -144,7 +291,7 @@ Thus, the program was implemented and executed successfully, and the required ou
 # IAPR-3- Module 3 - FoC
 # Ex.No:15
   Formulate a C program to remove duplicate words from a given string and display the string with only unique words.
-# Date : 
+# Date : 26-02-2026
 # Aim:
   To formulate a C program to remove duplicate words from a given string and display the string with only unique words.
 # Algorithm:
@@ -169,7 +316,53 @@ Thus, the program was implemented and executed successfully, and the required ou
 ### Step 8: 
   Stop
 # Program:
+```
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str[200], words[50][50];
+    int i = 0, j = 0, k = 0, n = 0;
+
+    printf("Enter a string: ");
+    scanf("%[^\n]s", str);
+
+    while (str[k] != '\0') {
+        if (str[k] == ' ') {
+            words[i][j] = '\0';
+            i++;
+            j = 0;
+        } else {
+            words[i][j++] = str[k];
+        }
+        k++;
+    }
+    words[i][j] = '\0';
+    n = i + 1;
+
+    for (i = 0; i < n; i++) {
+        if (words[i][0] == '\0')
+            continue;
+
+        for (j = i + 1; j < n; j++) {
+            if (strcmp(words[i], words[j]) == 0) {
+                words[j][0] = '\0';
+            }
+        }
+    }
+
+    printf("String after removing duplicates:\n");
+    for (i = 0; i < n; i++) {
+        if (words[i][0] != '\0')
+            printf("%s ", words[i]);
+    }
+
+    return 0;
+}
+
+```
 # Output:
+<img width="889" height="464" alt="image" src="https://github.com/user-attachments/assets/bbeb180c-f4b5-478c-9f95-afde8fe5d217" />
+
 # Result: 
 Thus, the program was implemented and executed successfully, and the required output was obtained.
-
